@@ -2,26 +2,26 @@ import express from 'express';
 import createHttpError from 'http-errors';
 import { JWTAuthentication } from '../authentication/jwt.js';
 import UserModel from './schema.js'
-// import multer from 'multer';
-// import {v2 as cloudinary} from 'cloudinary';
-// import {CloudinaryStorage} from 'multer-storage-cloudinary';
+import multer from 'multer';
+import {v2 as cloudinary} from 'cloudinary';
+import {CloudinaryStorage} from 'multer-storage-cloudinary';
 
 
-// const { CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } = process.env;
+const { CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } = process.env;
 
-// cloudinary.config({
-//     cloud_name: CLOUDINARY_NAME,
-//     api_key: CLOUDINARY_KEY,
-//     api_secret: CLOUDINARY_SECRET,
-// });
+cloudinary.config({
+    cloud_name: CLOUDINARY_NAME,
+    api_key: CLOUDINARY_KEY,
+    api_secret: CLOUDINARY_SECRET,
+});
 
-// const cloudinaryStorage = new CloudinaryStorage({
-//     cloudinary,
-//     params: {
-//         folder: 'users-profile-pics',
-//         allowedFormats: ['jpg', 'png'],
-//     }
-// });
+const cloudinaryStorage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: 'users-profile-pics',
+        allowedFormats: ['jpg', 'png'],
+    }
+});
 
 
 
@@ -51,6 +51,46 @@ UserRouter.post("/login", async(req, res, next) => {
             next(error);
         }
     })
+
+UserRouter.put("/:id", async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const user = await UserModel.findByIdAndUpdate(id, req.body, { new: true });
+        if (user) {
+            res.send(user);
+        } else {
+            next(createHttpError(404, "User not found"));
+        }
+    } catch (error) {
+        next(error);
+    }
+
+    })
+        
+        
+UserRouter.post("/:id/picture", multer({storage: cloudinaryStorage}).single("user-picture"), async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const user = await UserModel.findByIdAndUpdate(
+            id, 
+            {image:req.file.path}, 
+            { new: true }
+            );
+        if (user) {
+            res.send(user);
+        } else {
+            next(createHttpError(404, "User not found"));
+        }
+    } catch (error) {
+        next(error);
+    }   
+}
+)
+
+
+
+
+    
 
     
 export default UserRouter;

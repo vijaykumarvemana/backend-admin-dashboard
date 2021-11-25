@@ -2,6 +2,27 @@ import express from 'express';
 import createHttpError from 'http-errors';
 import { JWTAuthentication } from '../authentication/jwt.js';
 import UserModel from './schema.js'
+// import multer from 'multer';
+// import {v2 as cloudinary} from 'cloudinary';
+// import {CloudinaryStorage} from 'multer-storage-cloudinary';
+
+
+// const { CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } = process.env;
+
+// cloudinary.config({
+//     cloud_name: CLOUDINARY_NAME,
+//     api_key: CLOUDINARY_KEY,
+//     api_secret: CLOUDINARY_SECRET,
+// });
+
+// const cloudinaryStorage = new CloudinaryStorage({
+//     cloudinary,
+//     params: {
+//         folder: 'users-profile-pics',
+//         allowedFormats: ['jpg', 'png'],
+//     }
+// });
+
 
 
 const UserRouter = express.Router();

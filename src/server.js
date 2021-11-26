@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import listEndpoints from 'express-list-endpoints';
 import UserRouter from './users/index.js';
+import productRouter from "./products/index.js"
 import { unauthorizedHandler, forbiddenHandler, catchAllHandler } from "./errorHandlers.js"
 
 
@@ -14,6 +15,7 @@ server.use(express.json());
 
 // Routes
 server.use('/', UserRouter);
+server.use('/products', productRouter)
 
 // Error Handlers
 server.use(unauthorizedHandler);

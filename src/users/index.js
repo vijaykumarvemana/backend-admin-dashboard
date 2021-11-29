@@ -43,7 +43,7 @@ UserRouter.post("/login", async(req, res, next) => {
             const user = await UserModel.checkCredentials(email, password);
             if (user) {
                 const accessToken = await JWTAuthentication(user)
-                res.send({ accessToken });
+                res.send({ accessToken, user });
             } else {
                 next(createHttpError(401, "Invalid credentials"));
             }
@@ -51,6 +51,17 @@ UserRouter.post("/login", async(req, res, next) => {
             next(error);
         }
     })
+
+UserRouter.get("/", async(req, res, next) =>{
+    try {
+        const user = await UserModel.find()
+        res.send(user)
+    } catch (error) {
+        next()
+    }
+}
+)
+
 
 UserRouter.put("/:id", async(req, res, next) => {
     try {

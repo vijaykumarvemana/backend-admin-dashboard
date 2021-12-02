@@ -6,7 +6,7 @@ import { check, validationResult } from "express-validator";
 //* Models
 import Transaction from "../models/transactions.js";
 import User from "../models/user.js"
-
+import Contact from "../models/contact.js";
 //* @route: GET api/transactions
 //* @desc: Get all user's transactions
 //* @access: Private
@@ -14,7 +14,7 @@ import User from "../models/user.js"
 const  transRouter = express.Router();
 transRouter.get("/", auth, async (req, res) => {
   try {
-    const transactions = await Transaction.find({ user: req.user.id }).sort({
+    const transactions = await Transaction.find().sort({
       date: -1,
     });
     res.json(transactions);
@@ -44,6 +44,7 @@ transRouter.post(
 
     //* Destructuring req.body
     const {
+   
       trxName,
       type,
       cost,
@@ -64,7 +65,7 @@ transRouter.post(
         dateClosed,
         expectedCloseDate,
         note,
-        user: req.user.id,
+       
       });
 
       const transaction = await newTransaction.save();

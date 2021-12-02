@@ -13,9 +13,9 @@ import User from '../models/user.js'
 //*     @access:    Private
 const contactRouter = express.Router();
 
-contactRouter.get("/", auth, async (req, res) => {
+contactRouter.get("/",  async (req, res) => {
   try {
-    const contacts = await Contact.find({ user: req.user.id }).sort({
+    const contacts = await Contact.find().sort({
       date: -1,
     });
     res.json(contacts);
@@ -65,7 +65,7 @@ contactRouter.post(
         zipcode,
         type,
         note,
-        user: req.user.id,
+        
       });
 
       const contact = await newContact.save();
@@ -117,9 +117,9 @@ contactRouter.put("/:id", auth, async (req, res) => {
     if (!contact) return res.status(404).json({ msg: "Contact not found " });
 
     //* Ensure user owns contact
-    if (contact.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "Not authorized" });
-    }
+    // if (contact.user.toString() !== req.user.id) {
+    //   return res.status(401).json({ msg: "Not authorized" });
+    // }
 
     contact = await Contact.findByIdAndUpdate(
       req.params.id,
@@ -137,16 +137,16 @@ contactRouter.put("/:id", auth, async (req, res) => {
 //*     @route:     DELETE api/contacts/:id
 //*     @desc:      Delete contact
 //*     @access:    Private
-contactRouter.delete("/:id", auth, async (req, res) => {
+contactRouter.delete("/:id",  async (req, res) => {
   try {
     let contact = await Contact.findById(req.params.id);
 
     if (!contact) return res.status(404).json({ msg: "Contact not found " });
 
     //* Ensure user owns contact
-    if (contact.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "Not authorized" });
-    }
+    // if (contact.user.toString() !== req.user.id) {
+    //   return res.status(401).json({ msg: "Not authorized" });
+    // }
 
     await Contact.findByIdAndRemove(req.params.id);
 

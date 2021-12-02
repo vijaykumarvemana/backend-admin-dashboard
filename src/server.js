@@ -5,8 +5,8 @@ import listEndpoints from 'express-list-endpoints';
 import UserRouter from './users/index.js';
 import productRouter from "./products/index.js"
 // import userRouter from './routes/users.js';
-// import contactRouter from './routes/contacts.js';
-// import transRouter from './routes/transaction.js';
+import contactRouter from './routes/contacts.js';
+import transRouter from './routes/transaction.js';
 // import inventoryRouter from './routes/inventory.js';
 // import authRouter from './routes/auth.js';
 import { unauthorizedHandler, forbiddenHandler, catchAllHandler } from "./errorHandlers.js"
@@ -23,8 +23,8 @@ server.use('/', UserRouter);
 server.use('/products', productRouter)
 // server.use('/api/users', userRouter);
 // server.use('/api/auth', authRouter);
-// server.use('/api/contacts', contactRouter);
-// server.use('/api/transactions', transRouter);
+server.use('/api/contacts', contactRouter);
+server.use('/api/transactions', transRouter);
 // server.use('/api/inventory', inventoryRouter);
 
 

@@ -4,7 +4,7 @@ const { Schema, model} = mongoose
 
 
 const productSchema  = new Schema({
-    id:{type:Number},
+   
     name: {type: String, required: true},
     image:{ type: String},
     stock: {type: Number, required: true},
@@ -17,11 +17,15 @@ productSchema.methods.toJSON = function () {
 
   const productDocument = this
   const productObject = productDocument.toObject()
+  const id = productObject._id
   delete productObject.__v
    
 
-
-  return productObject
+  return {
+    ...productObject,
+    id,
+  }
+  
 }
 
 

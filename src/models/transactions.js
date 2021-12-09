@@ -1,11 +1,12 @@
 //* Dependencies
 import mongoose from "mongoose"
+import CustomerModel from "../customers/schema.js"
 
 //* Mongo DB schema
 const TransactionSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "contacts",
+    ref: "Customer",
   },
   // TODO Add a ref to contacts so that transactions can be associated with a specific contact. Should follow similar syntax to the user property above
   trxName: {

@@ -7,12 +7,13 @@ import { check, validationResult } from "express-validator";
 import Transaction from "../models/transactions.js";
 import User from "../models/user.js"
 import Contact from "../models/contact.js";
+import CustomerModel   from "../customers/schema.js";
 //* @route: GET api/transactions
 //* @desc: Get all user's transactions
 //* @access: Private
 
 const  transRouter = express.Router();
-transRouter.get("/", auth, async (req, res) => {
+transRouter.get("/",  async (req, res) => {
   try {
     const transactions = await Transaction.find().sort({
       date: -1,
@@ -30,7 +31,7 @@ transRouter.get("/", auth, async (req, res) => {
 transRouter.post(
   "/",
   [
-    auth,
+    
     [
       check("trxName", "Transaction name is required").not().isEmpty(),
       check("type", "Please select a transaction type").not().isEmpty(),
@@ -81,7 +82,7 @@ transRouter.post(
 //* @route: PUT api/transactions:id
 //* @desc: Update transaction
 //* @access: Private
-transRouter.put("/:id", auth, async (req, res) => {
+transRouter.put("/:id",  async (req, res) => {
   const {
     trxName,
     type,
@@ -133,7 +134,7 @@ transRouter.put("/:id", auth, async (req, res) => {
 //* @route: DELETE api/transactions/:id
 //* @desc: Delete transaction
 //* @access: Private
-transRouter.delete("/:id", auth, async (req, res) => {
+transRouter.delete("/:id",  async (req, res) => {
   try {
     let transaction = await Transaction.findById(req.params.id);
 

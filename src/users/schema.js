@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   image: { type: String},
-  role: { type: String, default: "User", enum: ["User", "Admin"] },
+  role: { type: String, default: "Admin", enum: ["User", "Admin"] },
 })
 
 UserSchema.pre("save", async function (next) {

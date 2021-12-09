@@ -5,6 +5,7 @@ import listEndpoints from 'express-list-endpoints';
 import UserRouter from './users/index.js';
 import productRouter from "./products/index.js"
 import customerRouter from './customers/index.js';
+import transactionRouter from './transactions/index.js';
 // import userRouter from './routes/users.js';
 // import contactRouter from './routes/contacts.js';
 // import transRouter from './routes/transaction.js';
@@ -23,6 +24,7 @@ server.use(express.json());
 server.use('/', UserRouter);
 server.use('/products', productRouter)
 server.use('/customers', customerRouter)
+server.use('/transactions', transactionRouter)
 // server.use('/api/users', userRouter);
 // server.use('/api/auth', authRouter);
 // server.use('/api/contacts', contactRouter);

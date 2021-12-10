@@ -18,12 +18,21 @@ CunstomerSchema.methods.toJSON = function () {
     const customerDocument = this
     const customerObject = customerDocument.toObject()
    const id = customerObject._id
+   const Month = customerObject.createdAt.getMonth() + 1.
+   const Day = customerObject.createdAt.getDate() 
+   
     delete customerObject.__v
 
     return {
         ...customerObject,
-        id
+        id,
+        Month,
+        Day
+       
     }
 
 }
+
+
+
   export default model('Customer', CunstomerSchema);

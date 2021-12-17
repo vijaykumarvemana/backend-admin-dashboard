@@ -34,7 +34,26 @@ customerRouter.get('/', async(req, res, next) => {
     } catch (err) {
         next(err);
     }
+
 })
+
+customerRouter.get("/search", async(req, res, next) => {
+    try {
+        const customers = await CustomerModel.find({
+            $text: {
+                $search: req.body.query._id === undefined ? req.body.query.name : req.body.query._id
+                },
+                $_id: {
+                    $ne: req.body._id
+                },
+
+                })
+                res.send(customers);
+                } catch (err) {
+                    next(err);
+                    }
+                    })
+                    
 customerRouter.get('/users-count', async(req, res, next) => {
     try {
         const customers = await CustomerModel.aggregate([{
